@@ -1,1 +1,63 @@
-<p>invoice works!</p>
+<table class="table">
+  <thead class="table-dark">
+  <tr>
+    <th scope="col">Sender</th>
+    <th scope="col">Receiver</th>
+    <th scope="col">Amount</th>
+    <th scope="col">Payed</th>
+    <th scope="col">Description</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody *ngFor="let i of invoiceList">
+    <tr>
+      <td>{{i.sender}}</td>
+      <td>{{i.receiver}}</td>
+      <td>{{i.amount}}</td>
+      <td>{{i.payed}}</td>
+      <td>{{i.description}}</td>
+      <td>
+        <button type="button" (click)="delete(i.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div [formGroup]="myForm">
+      <div class="form-control">
+        <label>Sender</label>
+        <input type="text" formControlName="sender">
+      </div>
+      <div class="form-control">
+        <label>Receiver</label>
+        <input type="text" formControlName="receiver">
+      </div>
+      <div class="form-control">
+        <label>Amount</label>
+        <input type="number" formControlName="amount">
+      </div>
+      <div class="form-control">
+        <label>Description</label>
+        <input type="text" formControlName="description">
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');save()">Save</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Create Modal</button>
+
+<hr>
+
+<pre>{{ closeResult }}</pre>
