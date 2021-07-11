@@ -18,12 +18,13 @@
       <td>{{i.description}}</td>
       <td>
         <button type="button" (click)="delete(i.id)">Delete</button>
+        <button type="button" (click)="isAddMode= false;openEdit(content, i)">Edit</button>
       </td>
     </tr>
   </tbody>
 </table>
 
-<ng-template #content let-modal>
+<ng-template #content let-modal >
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -32,6 +33,9 @@
   </div>
   <div class="modal-body">
     <div [formGroup]="myForm">
+      <div *ngIf="isAddMode">
+        <input type="hidden" formControlName="id">
+      </div>
       <div class="form-control">
         <label>Sender</label>
         <input type="text" formControlName="sender">
@@ -52,11 +56,12 @@
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');save()">Save</button>
+    <button type="button" class="btn btn-outline-dark" *ngIf="isAddMode" (click)="modal.close('Save click');save()">Save</button>
+    <button type="button" class="btn btn-outline-dark" *ngIf="!isAddMode" (click)="modal.close('Edited');edit()">Edit</button>
   </div>
 </ng-template>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Create Modal</button>
+<button class="btn btn-lg btn-outline-primary" (click)="isAddMode= true;open(content)">Create Modal</button>
 
 <hr>
 
